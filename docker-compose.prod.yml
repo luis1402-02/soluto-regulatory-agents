@@ -75,23 +75,19 @@ services:
       retries: 3
       start_period: 40s
 
-  # LangGraph Studio (Development/Monitoring)
-  langgraph-studio:
-    image: langchain/langgraph-studio:latest
-    container_name: soluto-langgraph-studio
-    restart: unless-stopped
-    ports:
-      - "8123:8123"
-    environment:
-      - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
-      - LANGCHAIN_ENDPOINT=${LANGCHAIN_ENDPOINT:-https://api.smith.langchain.com}
-      - LANGGRAPH_CONFIG=/app/langgraph.json
-    volumes:
-      - ./langgraph.json:/app/langgraph.json:ro
-      - ./src:/app/src:ro
-      - ./.env:/app/.env:ro
-    depends_on:
-      - app
+  # LangSmith Monitoring (Optional - remove if not using LangSmith)
+  # Uncomment below if you want to run a local LangSmith instance
+  # langgraph-studio:
+  #   image: langchain/langgraph-studio:latest
+  #   container_name: soluto-langgraph-studio
+  #   restart: unless-stopped
+  #   ports:
+  #     - "8123:8123"
+  #   environment:
+  #     - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
+  #     - LANGCHAIN_ENDPOINT=${LANGCHAIN_ENDPOINT:-https://api.smith.langchain.com}
+  #   depends_on:
+  #     - app
 
   # Monitoring with Prometheus
   prometheus:

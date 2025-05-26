@@ -8,7 +8,7 @@ from langchain.pydantic_v1 import BaseModel, Field
 from langserve import add_routes
 
 from ..graph import RegulatoryMultiAgentSystem
-from ..config.langsmith import configure_langsmith
+from ..config.langsmith import configure_langsmith, get_langsmith_url
 
 
 class RegulatoryInput(BaseModel):
