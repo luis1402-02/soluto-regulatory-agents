@@ -1,0 +1,137 @@
+version: 1
+disable_existing_loggers: false
+
+formatters:
+  standard:
+    format: '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+  
+  detailed:
+    format: '%(asctime)s [%(levelname)s] %(name)s:%(lineno)d - %(funcName)s: %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+  
+  json:
+    (): 'pythonjsonlogger.jsonlogger.JsonFormatter'
+    format: '%(asctime)s %(name)s %(levelname)s %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: standard
+    stream: ext://sys.stdout
+
+  file:
+    class: logging.handlers.RotatingFileHandler
+    level: INFO
+    formatter: json
+    filename: logs/app.log
+    maxBytes: 10485760  # 10MB
+    backupCount: 5
+
+  error_file:
+    class: logging.handlers.RotatingFileHandler
+    level: ERROR
+    formatter: detailed
+    filename: logs/error.log
+    maxBytes: 10485760  # 10MB
+    backupCount: 5
+
+  agents:
+    class: logging.handlers.RotatingFileHandler
+    level: DEBUG
+    formatter: json
+    filename: logs/agents.log
+    maxBytes: 10485760  # 10MB
+    backupCount: 10
+
+  monitoring:
+    class: logging.handlers.RotatingFileHandler
+    level: INFO
+    formatter: json
+    filename: logs/monitoring.log
+    maxBytes: 5242880   # 5MB
+    backupCount: 5
+
+  perplexity:
+    class: logging.handlers.RotatingFileHandler
+    level: INFO
+    formatter: json
+    filename: logs/perplexity.log
+    maxBytes: 5242880   # 5MB
+    backupCount: 5
+
+loggers:
+  # Root logger
+  '':
+    level: INFO
+    handlers: [console, file]
+    propagate: false
+
+  # Application loggers
+  src:
+    level: INFO
+    handlers: [console, file]
+    propagate: false
+
+  src.agents:
+    level: DEBUG
+    handlers: [agents]
+    propagate: false
+
+  src.api.monitoring:
+    level: INFO
+    handlers: [monitoring]
+    propagate: false
+
+  src.tools.perplexity_tool:
+    level: INFO
+    handlers: [perplexity]
+    propagate: false
+
+  # Error logging
+  error:
+    level: ERROR
+    handlers: [error_file]
+    propagate: false
+
+  # External libraries
+  uvicorn:
+    level: INFO
+    handlers: [console]
+    propagate: false
+
+  uvicorn.access:
+    level: INFO
+    handlers: [file]
+    propagate: false
+
+  fastapi:
+    level: INFO
+    handlers: [console, file]
+    propagate: false
+
+  langchain:
+    level: WARNING
+    handlers: [file]
+    propagate: false
+
+  langgraph:
+    level: INFO
+    handlers: [agents]
+    propagate: false
+
+  httpx:
+    level: WARNING
+    handlers: [file]
+    propagate: false
+
+  aiohttp:
+    level: WARNING
+    handlers: [file]
+    propagate: false
+
+root:
+  level: INFO
+  handlers: [console, file, error_file]

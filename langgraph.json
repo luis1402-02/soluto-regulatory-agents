@@ -1,0 +1,57 @@
+{
+  "name": "Soluto Regulatory Agents",
+  "description": "Sistema Multiagente Regulatório - Grupo Soluto",
+  "version": "1.0.0",
+  "graphs": [
+    {
+      "id": "regulatory_system",
+      "name": "Sistema Regulatório Principal",
+      "path": "./src/graph.py:RegulatoryMultiAgentSystem.graph",
+      "env": ".env",
+      "python_path": "./src"
+    }
+  ],
+  "visualization": {
+    "theme": "dark",
+    "layout": "hierarchical",
+    "node_colors": {
+      "orchestrator": "#3B82F6",
+      "perplexity_agent": "#8B5CF6",
+      "compliance_agent": "#10B981",
+      "legal_analysis_agent": "#F59E0B",
+      "risk_assessment_agent": "#EF4444",
+      "research_agent": "#6366F1",
+      "document_review_agent": "#14B8A6",
+      "quality_control": "#F97316",
+      "finalize_output": "#22C55E"
+    },
+    "edge_styles": {
+      "default": {
+        "animated": true,
+        "strokeWidth": 2
+      },
+      "error": {
+        "stroke": "#EF4444",
+        "strokeDasharray": "5 5"
+      },
+      "success": {
+        "stroke": "#22C55E",
+        "strokeWidth": 3
+      }
+    }
+  },
+  "monitoring": {
+    "enabled": true,
+    "trace_all": true,
+    "sample_rate": 1.0,
+    "include_tool_calls": true,
+    "include_llm_calls": true
+  },
+  "deployment": {
+    "host": "0.0.0.0",
+    "port": 2024,
+    "workers": 4,
+    "reload": false,
+    "log_level": "info"
+  }
+}
